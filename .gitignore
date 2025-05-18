@@ -1,0 +1,8 @@
+/Library/
+/Logs/
+/UserSettings/
+Assembly*
+.vs/
+manda.sln
+UpgradeLog.htm
+.vsconfig
