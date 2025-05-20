@@ -17,6 +17,23 @@ public class Game_Manager : MonoBehaviour
     void Start()
     {
         playerCountText.text = "Players: " + playerCount.ToString(); // Отображаем количество игроков
+
+        fillPlayers(); // Заполняем массив игроков
+
+        currentPlayer = players[0]; // Устанавливаем первого игрока как текущего
+    }
+
+    void fillPlayers()
+    {
+        players = new Player[playerCount]; // Инициализируем массив игроков
+        for(int i = 0; i < playerCount; ++i)
+        {
+            GameObject playerObject = new GameObject("Player" + (i + 1));
+            Player player = playerObject.AddComponent<Player>();
+            player.playerName = "Player" + (i + 1); // Присваиваем имя игроку
+            player.playerID = i + 1; // Присваиваем уникальный номер игроку
+            players[i] = player; // Добавляем игрока в массив
+        }
     }
 
     public void NextTurn()
@@ -27,9 +44,6 @@ public class Game_Manager : MonoBehaviour
         currentPlayer = players[currentIndex];
     }
 
-
-
-    // Update is called once per frame
     void Update()
     {
 

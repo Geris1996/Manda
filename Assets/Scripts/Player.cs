@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int playerID; // Уникальный номер игрока
+    public int playerID = 1; // Уникальный номер игрока
     public string playerName; // Имя игрока
     public Piece[] pieces; // Массив фишек игрока
 
@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
     }
 
     // Update is called once per frame

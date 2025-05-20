@@ -1,59 +1,29 @@
 using UnityEngine;
 
-public enum CellType
+public class Cell
 {
-    PLAYER_HOME,
-    START,
-    BASE,
-    SAVE,
-    END,
-    TELEPORT // Добавим для примера
-}
+    public GameObject quadObject;
 
-public abstract class Cell : MonoBehaviour
-{
-    public int cellID; // Уникальный номер клетки на поле
-    public CellType cellType; // Тип клетки
+    public int cellID;
 
-    // Инициализация клетки
-    public virtual void Initialize(int index, CellType type)
+    public Cell next;
+    public Cell previous;
+
+    public Cell(Vector2Int gridPos, int id = 0, Cell prev = null)
     {
-        this.cellID = index;
-        this.cellType = type;
+        cellID = id;
+        CreateQuadForCell(gridPos, id);
+        next = null;
+        previous = prev;
     }
 
-    // Событие при попадании фишки на клетку
-    public abstract void OnCellEvent();
-}
-
-public class TeleportCell : Cell
-{
-    public int targetCellID; // Куда телепортирует
-
-    public override void Initialize(int index, CellType type)
+    void CreateQuadForCell(Vector2Int gridPos, int index)
     {
-        base.Initialize(index, type);
-        // targetCellID можно задавать через параметры конструктора или вручную
-    }
+        quadObject = GameObject.CreatePrimitive(PrimitiveType.Quad);
 
-    public override void OnCellEvent()
-    {
-        Debug.Log($"Фишка телепортирована на клетку {targetCellID}");
-    }
-}
+        quadObject.transform.position = new Vector3(gridPos.x, 0, gridPos.y);
+        quadObject.transform.rotation = Quaternion.Euler(90, 0, 0);
 
-public class PlayerHomeCell : Cell
-{
-    private Player player; // Игрок, которому принадлежит клетка
-
-
-    public override void Initialize(int index, CellType type)
-    {
-        base.Initialize(index, type);
-
-    }
-    public override void OnCellEvent()
-    {
-        Debug.Log($"Фишка вернулась домой на клетку {cellID}");
+        quadObject.name = $"CellQuad_{index}";
     }
 }
